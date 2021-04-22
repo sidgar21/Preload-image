@@ -1,0 +1,46 @@
+<span class="checkboxes">
+  <input value="img" type="radio" name="preloadType" [(ngModel)]="preloadType"> Preload images using img
+  <input value="iframe" type="radio" name="preloadType" [(ngModel)]="preloadType"> Preload images using iframe
+  <input value="newImage" type="radio" name="preloadType" [(ngModel)]="preloadType"> Preload images using new Image
+  <input value="disable" type="radio" name="preloadType" [(ngModel)]="preloadType"> Disable preload
+</span>
+<div class="content">
+  <span *ngFor="let car of cars" class="logos">
+
+    <div class="model-container">
+      <img [src]="car.source" alt="" class="model">
+    </div>
+
+    <ngb-accordion (click)="loadImages(car.name)">
+      <ngb-panel [title]="car.name" class="cars-model" id="aa">
+        <ng-template ngbPanelContent class="cass">
+
+          <iframe *ngIf="preloadType==='iframe'" id="frame" name="cars">
+            <span *ngFor="let model of car.models">
+              <img *ngFor="let source of model.sources" [src]="source">
+            </span>
+          </iframe>
+
+          <span *ngIf="preloadType==='img'" id="imgCar" name="cars" hidden>
+            <span *ngFor="let model of car.models">
+              <img *ngFor="let source of model.sources" [src]="source">
+            </span>
+          </span>
+
+          <span *ngFor="let model of car.models, let i=index" class="cars">
+            <ngb-accordion>
+              <ngb-panel [title]="model.name">
+                <ng-template ngbPanelContent class="cars-container">
+                    <div *ngFor="let source of model.sources" class="car">
+                      <img [src]="source" alt="" class="car-item">
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </span>
+
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </span>
+</div>
